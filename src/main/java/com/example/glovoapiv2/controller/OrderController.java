@@ -32,6 +32,13 @@ public class OrderController {
         return orderService.addProduct(orderId, productId);
     }
 
-    @DeleteMapping
-    public void delete() {};
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) {
+        orderService.delete(id);
+    };
+
+    @DeleteMapping("/{id}/product/{productID}")
+    public void remove(@PathVariable int id, @PathVariable int productID) {
+        orderService.remove(id, productID);
+    }
 }

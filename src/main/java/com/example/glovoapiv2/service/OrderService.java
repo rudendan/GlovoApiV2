@@ -6,9 +6,13 @@ import com.example.glovoapiv2.entity.OrderEntity;
 import com.example.glovoapiv2.entity.ProductEntity;
 import com.example.glovoapiv2.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 public class OrderService {
@@ -23,7 +27,7 @@ public class OrderService {
     }
 
     public OrderEntity get(int id) {
-        return orderRepository.findById(id).orElseThrow();
+        return orderRepository.findById(id).orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
     }
 
     public OrderDto create(OrderDto order) {
@@ -36,7 +40,8 @@ public class OrderService {
     }
 
     public void delete(int id) {
-       orderRepository.deleteById(id);
+       OrderEntity order = get(id);
+       orderRepository.delete(order);
     }
 
     public OrderDto addProduct(int orderId, int productId) {
@@ -45,6 +50,10 @@ public class OrderService {
         order.getProducts().add(product);
         order.setCost(sum(order.getProducts()));
         return OrderConvertor.toOrderDto(order);
+    }
+
+    public void remove(int id, int productID) {
+
     }
 
     public float sum(List<ProductEntity> products) {
