@@ -1,13 +1,18 @@
 package com.example.glovoapiv2.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
+@Builder
 @Entity(name = "products")
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductEntity {
 
     @Id
@@ -15,5 +20,6 @@ public class ProductEntity {
     private int id;
     private String name;
     private float cost;
-
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products", cascade = CascadeType.ALL)
+    private List<OrderEntity> orders;
 }

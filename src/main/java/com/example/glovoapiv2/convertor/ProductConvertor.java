@@ -11,4 +11,11 @@ public class ProductConvertor {
                 .cost(product.getCost())
                 .build();
     }
+
+    public static ProductEntity toProductEntity(ProductDto product) {
+        return ProductEntity.builder()
+                .name(product.getName())
+                .cost(product.getCost())
+                .build();
+    }
 }

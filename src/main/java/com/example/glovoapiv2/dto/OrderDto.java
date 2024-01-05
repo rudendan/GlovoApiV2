@@ -1,16 +1,19 @@
 package com.example.glovoapiv2.dto;
 
 import com.example.glovoapiv2.entity.ProductEntity;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderDto {
 
+    private int id;
+    private LocalDate date;
+    private float cost;
     List<ProductDto> products;
 }

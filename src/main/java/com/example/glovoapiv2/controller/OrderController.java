@@ -3,10 +3,7 @@ package com.example.glovoapiv2.controller;
 import com.example.glovoapiv2.dto.OrderDto;
 import com.example.glovoapiv2.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/orders")
@@ -22,5 +19,10 @@ public class OrderController {
     @GetMapping("/{id}")
     public OrderDto getById(@PathVariable int id) {
         return orderService.getById(id);
+    }
+
+    @PostMapping
+    public OrderDto create(@RequestBody OrderDto order) {
+        return orderService.create(order);
     }
 }
