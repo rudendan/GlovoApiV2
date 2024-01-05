@@ -19,17 +19,12 @@ public class OrderConvertor {
     }
 
     public static OrderEntity toOrderEntity(OrderDto order) {
-        float cost = 0.0f;
 
-        for (ProductDto product : order.getProducts()) {
-            cost += product.getCost();
-        }
 
         return OrderEntity.builder()
                 .date(LocalDate.now())
                 .products(order.getProducts().stream()
                         .map(ProductConvertor::toProductEntity).toList())
-                .cost(cost)
                 .build();
     }
 }

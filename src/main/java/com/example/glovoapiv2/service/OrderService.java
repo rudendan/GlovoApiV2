@@ -22,15 +22,37 @@ public class OrderService {
         this.productService = productService;
     }
 
-    public OrderDto getById(int id) {
-        return orderRepository.findById(id).map(OrderConvertor::toOrderDto).orElseThrow();
+    public OrderEntity get(int id) {
+        return orderRepository.findById(id).orElseThrow();
     }
 
     public OrderDto create(OrderDto order) {
 
-        List<ProductEntity> productEntities = productService.save(order.getProducts());
+        List<ProductEntity> productEntities = productService.getByIds(order.getProducts());
         OrderEntity orderEntity = OrderConvertor.toOrderEntity(order);
         orderEntity.setProducts(productEntities);
+        orderEntity.setCost(sum(orderEntity.getProducts()));
         return OrderConvertor.toOrderDto(orderRepository.save(orderEntity));
+    }
+
+    public void delete(int id) {
+       orderRepository.deleteById(id);
+    }
+
+    public OrderDto addProduct(int orderId, int productId) {
+        OrderEntity order = get(orderId);
+        ProductEntity product = productService.get(productId);
+        order.getProducts().add(product);
+        order.setCost(sum(order.getProducts()));
+        return OrderConvertor.toOrderDto(order);
+    }
+
+    public float sum(List<ProductEntity> products) {
+        float cost = 0.0f;
+
+        for (ProductEntity product : products) {
+            cost += product.getCost();
+        }
+        return cost;
     }
 }

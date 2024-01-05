@@ -7,6 +7,7 @@ public class ProductConvertor {
 
     public static ProductDto toProductDto(ProductEntity product) {
         return ProductDto.builder()
+                .id(product.getId())
                 .name(product.getName())
                 .cost(product.getCost())
                 .build();

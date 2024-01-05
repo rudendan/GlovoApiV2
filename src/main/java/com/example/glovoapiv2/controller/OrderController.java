@@ -1,5 +1,6 @@
 package com.example.glovoapiv2.controller;
 
+import com.example.glovoapiv2.convertor.OrderConvertor;
 import com.example.glovoapiv2.dto.OrderDto;
 import com.example.glovoapiv2.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,20 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public OrderDto getById(@PathVariable int id) {
-        return orderService.getById(id);
+    public OrderDto get(@PathVariable int id) {
+        return OrderConvertor.toOrderDto(orderService.get(id));
     }
 
     @PostMapping
     public OrderDto create(@RequestBody OrderDto order) {
         return orderService.create(order);
     }
+
+    @PatchMapping("/{orderId}/product/{productId}")
+    public OrderDto addProduct(@PathVariable int orderId, @PathVariable int productId) {
+        return orderService.addProduct(orderId, productId);
+    }
+
+    @DeleteMapping
+    public void delete() {};
 }

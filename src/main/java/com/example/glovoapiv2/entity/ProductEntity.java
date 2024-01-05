@@ -20,6 +20,6 @@ public class ProductEntity {
     private int id;
     private String name;
     private float cost;
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products", cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
     private List<OrderEntity> orders;
 }
