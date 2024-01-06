@@ -11,8 +11,7 @@ public class OrderConvertor {
         return OrderDto.builder()
                 .id(order.getId())
                 .date(order.getDate())
-                .name(order.getName())
-                .address(order.getAddress())
+                .client(ClientConvertor.toDto(order.getClient()))
                 .cost(order.getCost())
                 .products(order.getProducts().stream()
                         .map(ProductConvertor::toDto).toList())
@@ -22,8 +21,7 @@ public class OrderConvertor {
     public static OrderEntity toEntity(OrderDto order) {
         return OrderEntity.builder()
                 .date(LocalDate.now())
-                .name(order.getName())
-                .address(order.getAddress())
+                .client(ClientConvertor.toEntity(order.getClient()))
                 .products(order.getProducts().stream()
                         .map(ProductConvertor::toEntity).toList())
                 .build();
