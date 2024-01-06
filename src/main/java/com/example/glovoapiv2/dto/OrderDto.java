@@ -1,8 +1,6 @@
 package com.example.glovoapiv2.dto;
 
-import com.example.glovoapiv2.entity.ProductEntity;
 import lombok.*;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,5 +15,5 @@ public class OrderDto {
     private String name;
     private String address;
     private float cost;
-    List<ProductDto> products;
+    private List<ProductDto> products;
 }

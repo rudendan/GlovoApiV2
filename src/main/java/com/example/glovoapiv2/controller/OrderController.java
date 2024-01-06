@@ -35,11 +35,11 @@ public class OrderController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
         orderService.delete(id);
-    };
+    }
 
-    @DeleteMapping("/{id}/product/{productID}")
-    public OrderDto remove(@PathVariable int id, @PathVariable int productID) {
-        return orderService.remove(id, productID);
+    @DeleteMapping("/{id}/product/{productId}")
+    public OrderDto remove(@PathVariable int id, @PathVariable int productId) {
+        return orderService.remove(id, productId);
     }
 
     @PutMapping
