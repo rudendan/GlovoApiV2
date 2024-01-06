@@ -20,6 +20,6 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ProductDto get (@PathVariable int id) {
-        return ProductConvertor.toProductDto(productService.get(id));
+        return ProductConvertor.toDto(productService.get(id));
     }
 }

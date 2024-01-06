@@ -18,6 +18,8 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private LocalDate date;
+    private String name;
+    private String address;
     private float cost;
     @ManyToMany
     @JoinTable(name = "orders_products",

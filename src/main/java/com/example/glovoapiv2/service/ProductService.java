@@ -23,7 +23,7 @@ public class ProductService {
 
     public List<ProductEntity> saveAll(List<ProductDto> productsDto) {
         List<ProductEntity> productsEntity = productsDto.stream()
-                .map(ProductConvertor::toProductEntity).toList();
+                .map(ProductConvertor::toEntity).toList();
         return productRepository.saveAll(productsEntity);
     }
 
@@ -32,7 +32,12 @@ public class ProductService {
         return productRepository.findAllById(ids);
     }
 
-//    public List<ProductEntity> getAll(List<ProductDto> products) {
-//        productRepository.
-//    }
+    public float sum(List<ProductEntity> products) {
+        float cost = 0.0f;
+
+        for (ProductEntity product : products) {
+            cost += product.getCost();
+        }
+        return cost;
+    }
 }

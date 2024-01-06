@@ -14,6 +14,8 @@ public class OrderDto {
 
     private int id;
     private LocalDate date;
+    private String name;
+    private String address;
     private float cost;
     List<ProductDto> products;
 }

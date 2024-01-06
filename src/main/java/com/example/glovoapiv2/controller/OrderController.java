@@ -19,7 +19,7 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public OrderDto get(@PathVariable int id) {
-        return OrderConvertor.toOrderDto(orderService.get(id));
+        return OrderConvertor.toDto(orderService.get(id));
     }
 
     @PostMapping
@@ -38,7 +38,12 @@ public class OrderController {
     };
 
     @DeleteMapping("/{id}/product/{productID}")
-    public void remove(@PathVariable int id, @PathVariable int productID) {
-        orderService.remove(id, productID);
+    public OrderDto remove(@PathVariable int id, @PathVariable int productID) {
+        return orderService.remove(id, productID);
+    }
+
+    @PutMapping
+    public OrderDto update(@RequestBody OrderDto order) {
+        return orderService.update(order);
     }
 }

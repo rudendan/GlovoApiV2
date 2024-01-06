@@ -6,7 +6,6 @@ import com.example.glovoapiv2.entity.OrderEntity;
 import com.example.glovoapiv2.entity.ProductEntity;
 import com.example.glovoapiv2.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,37 +30,49 @@ public class OrderService {
     }
 
     public OrderDto create(OrderDto order) {
-
-        List<ProductEntity> productEntities = productService.getByIds(order.getProducts());
-        OrderEntity orderEntity = OrderConvertor.toOrderEntity(order);
-        orderEntity.setProducts(productEntities);
-        orderEntity.setCost(sum(orderEntity.getProducts()));
-        return OrderConvertor.toOrderDto(orderRepository.save(orderEntity));
+        List<ProductEntity> products = productService.getByIds(order.getProducts());
+        OrderEntity orderEntity = OrderConvertor.toEntity(order);
+        if(products != null) {
+            orderEntity.setProducts(products);
+            orderEntity.setCost(productService.sum(orderEntity.getProducts()));
+        }
+        return OrderConvertor.toDto(orderRepository.save(orderEntity));
     }
 
     public void delete(int id) {
-       OrderEntity order = get(id);
-       orderRepository.delete(order);
+        OrderEntity order = get(id);
+        orderRepository.delete(order);
     }
 
     public OrderDto addProduct(int orderId, int productId) {
         OrderEntity order = get(orderId);
         ProductEntity product = productService.get(productId);
-        order.getProducts().add(product);
-        order.setCost(sum(order.getProducts()));
-        return OrderConvertor.toOrderDto(order);
-    }
-
-    public void remove(int id, int productID) {
-
-    }
-
-    public float sum(List<ProductEntity> products) {
-        float cost = 0.0f;
-
-        for (ProductEntity product : products) {
-            cost += product.getCost();
+        if(product != null) {
+            order.getProducts().add(product);
+            order.setCost(productService.sum(order.getProducts()));
         }
-        return cost;
+        return OrderConvertor.toDto(orderRepository.save(order));
+    }
+
+    public OrderDto remove(int orderId, int productId) {
+        OrderEntity order = get(orderId);
+        ProductEntity product = productService.get(productId);
+        if(product != null) {
+            order.getProducts().remove(product);
+            order.setCost(productService.sum(order.getProducts()));
+        }
+        return OrderConvertor.toDto(orderRepository.save(order));
+    }
+
+    public OrderDto update(OrderDto orderDto) {
+        OrderEntity order = get(orderDto.getId());
+        List<ProductEntity> productEntities = productService.getByIds(orderDto.getProducts());
+        if (productEntities != null) {
+            order.setProducts(productEntities);
+            order.setCost(productService.sum(productEntities));
+        }
+        if (orderDto.getName() != null) order.setName(orderDto.getName());
+        if (orderDto.getAddress() != null) order.setAddress(orderDto.getAddress());
+        return OrderConvertor.toDto(orderRepository.save(order));
     }
 }
