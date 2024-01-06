@@ -20,8 +20,6 @@ public class OrderConvertor {
     }
 
     public static OrderEntity toEntity(OrderDto order) {
-
-
         return OrderEntity.builder()
                 .date(LocalDate.now())
                 .name(order.getName())
