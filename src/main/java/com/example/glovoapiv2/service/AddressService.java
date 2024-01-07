@@ -1,6 +1,6 @@
 package com.example.glovoapiv2.service;
 
-import com.example.glovoapiv2.convertor.AddressConvertor;
+import com.example.glovoapiv2.converter.AddressConverter;
 import com.example.glovoapiv2.dto.AddressDto;
 import com.example.glovoapiv2.entity.AddressEntity;
 import com.example.glovoapiv2.repository.AddressRepository;
@@ -18,6 +18,6 @@ public class AddressService {
     }
 
     public AddressEntity save(AddressDto address) {
-        return addressRepository.save(AddressConvertor.toEntity(address));
+        return addressRepository.save(AddressConverter.toEntity(address));
     }
 }

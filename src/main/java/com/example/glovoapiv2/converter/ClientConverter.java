@@ -1,15 +1,15 @@
-package com.example.glovoapiv2.convertor;
+package com.example.glovoapiv2.converter;
 
 import com.example.glovoapiv2.dto.ClientDto;
 import com.example.glovoapiv2.entity.ClientEntity;
 
-public class ClientConvertor {
+public class ClientConverter {
 
     public static ClientEntity toEntity(ClientDto client) {
         return ClientEntity.builder()
                 .name(client.getName())
                 .surname(client.getSurname())
-                .address(AddressConvertor.toEntity(client.getAddress()))
+                .address(AddressConverter.toEntity(client.getAddress()))
                 .phoneNumber(client.getPhoneNumber())
                 .build();
     }
@@ -18,7 +18,7 @@ public class ClientConvertor {
         return ClientDto.builder()
                 .name(client.getName())
                 .surname(client.getSurname())
-                .address(AddressConvertor.toDto(client.getAddress()))
+                .address(AddressConverter.toDto(client.getAddress()))
                 .phoneNumber(client.getPhoneNumber())
                 .build();
     }

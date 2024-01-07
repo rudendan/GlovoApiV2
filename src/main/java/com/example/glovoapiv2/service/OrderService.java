@@ -1,7 +1,7 @@
 package com.example.glovoapiv2.service;
 
-import com.example.glovoapiv2.convertor.ClientConvertor;
-import com.example.glovoapiv2.convertor.OrderConvertor;
+import com.example.glovoapiv2.converter.ClientConverter;
+import com.example.glovoapiv2.converter.OrderConverter;
 import com.example.glovoapiv2.dto.OrderDto;
 import com.example.glovoapiv2.entity.ClientEntity;
 import com.example.glovoapiv2.entity.OrderEntity;
@@ -36,13 +36,13 @@ public class OrderService {
     public OrderDto create(OrderDto order) {
         List<ProductEntity> products = productService.getByIds(order.getProducts());
         ClientEntity client = clientService.save(order.getClient());
-        OrderEntity orderEntity = OrderConvertor.toEntity(order);
+        OrderEntity orderEntity = OrderConverter.toEntity(order);
         if (products != null) {
             orderEntity.setProducts(products);
             orderEntity.setCost(productService.sum(orderEntity.getProducts()));
             orderEntity.setClient(client);
         }
-        return OrderConvertor.toDto(orderRepository.save(orderEntity));
+        return OrderConverter.toDto(orderRepository.save(orderEntity));
     }
 
     public void delete(int id) {
@@ -57,7 +57,7 @@ public class OrderService {
             order.getProducts().add(product);
             order.setCost(productService.sum(order.getProducts()));
         }
-        return OrderConvertor.toDto(orderRepository.save(order));
+        return OrderConverter.toDto(orderRepository.save(order));
     }
 
     public OrderDto remove(int orderId, int productId) {
@@ -67,7 +67,7 @@ public class OrderService {
             order.getProducts().remove(product);
             order.setCost(productService.sum(order.getProducts()));
         }
-        return OrderConvertor.toDto(orderRepository.save(order));
+        return OrderConverter.toDto(orderRepository.save(order));
     }
 
     public OrderDto update(OrderDto orderDto) {
@@ -77,8 +77,7 @@ public class OrderService {
             order.setProducts(productEntities);
             order.setCost(productService.sum(productEntities));
         }
-        if (orderDto.getClient() != null) order.setClient(ClientConvertor.toEntity(orderDto.getClient()));
-        //if (orderDto.getAddress() != null) order.setAddress(orderDto.getAddress());
-        return OrderConvertor.toDto(orderRepository.save(order));
+        if (orderDto.getClient() != null) order.setClient(ClientConverter.toEntity(orderDto.getClient()));
+        return OrderConverter.toDto(orderRepository.save(order));
     }
 }

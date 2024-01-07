@@ -1,6 +1,6 @@
 package com.example.glovoapiv2.service;
 
-import com.example.glovoapiv2.convertor.ClientConvertor;
+import com.example.glovoapiv2.converter.ClientConverter;
 import com.example.glovoapiv2.dto.ClientDto;
 import com.example.glovoapiv2.entity.AddressEntity;
 import com.example.glovoapiv2.entity.ClientEntity;
@@ -22,7 +22,7 @@ public class ClientService {
 
     public ClientEntity save(ClientDto clientDto) {
         AddressEntity address = addressService.save(clientDto.getAddress());
-        ClientEntity client = ClientConvertor.toEntity(clientDto);
+        ClientEntity client = ClientConverter.toEntity(clientDto);
         client.setAddress(address);
         return clientRepository.save(client);
     }

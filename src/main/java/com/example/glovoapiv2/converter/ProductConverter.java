@@ -1,9 +1,9 @@
-package com.example.glovoapiv2.convertor;
+package com.example.glovoapiv2.converter;
 
 import com.example.glovoapiv2.dto.ProductDto;
 import com.example.glovoapiv2.entity.ProductEntity;
 
-public class ProductConvertor {
+public class ProductConverter {
 
     public static ProductDto toDto(ProductEntity product) {
         return ProductDto.builder()

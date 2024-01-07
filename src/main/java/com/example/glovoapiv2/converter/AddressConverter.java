@@ -1,9 +1,9 @@
-package com.example.glovoapiv2.convertor;
+package com.example.glovoapiv2.converter;
 
 import com.example.glovoapiv2.dto.AddressDto;
 import com.example.glovoapiv2.entity.AddressEntity;
 
-public class AddressConvertor {
+public class AddressConverter {
 
     public static AddressEntity toEntity(AddressDto address) {
         return AddressEntity.builder()

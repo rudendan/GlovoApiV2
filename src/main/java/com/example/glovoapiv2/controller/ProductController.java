@@ -1,6 +1,6 @@
 package com.example.glovoapiv2.controller;
 
-import com.example.glovoapiv2.convertor.ProductConvertor;
+import com.example.glovoapiv2.converter.ProductConverter;
 import com.example.glovoapiv2.dto.ProductDto;
 import com.example.glovoapiv2.service.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +20,6 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ProductDto get (@PathVariable int id) {
-        return ProductConvertor.toDto(productService.get(id));
+        return ProductConverter.toDto(productService.get(id));
     }
 }
